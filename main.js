@@ -1,5 +1,3 @@
-
-
 var floatSubMenuTimeout, targetFloatMenu, handleSlimScroll = function() {
   "use strict";
   $.when($("[data-scrollbar=true]").each(function() {
@@ -10,40 +8,40 @@ var floatSubMenuTimeout, targetFloatMenu, handleSlimScroll = function() {
 },
 handleSidebarMenu = function() {
   "use strict";
-  const t = $(".sidebar").attr("data-disable-slide-animation") ? 0 : 250;
+  let t = $(".sidebar").attr("data-disable-slide-animation") ? 0 : 250;
   $(".sidebar .nav > .has-sub > a").click(function() {
-    const a = $(this).next(".sub-menu"),
+    let a = $(this).next(".sub-menu"),
     e = $(".sidebar .nav > li.has-sub > .sub-menu").not(a);
     0 === $(".page-sidebar-minified").length && ($(e).closest("li").addClass("closing"), $(e).slideUp(t, function() {
       $(e).closest("li").addClass("closed").removeClass("expand closing")
     }), $(a).is(":visible") ? $(a).closest("li").addClass("closing").removeClass("expand") : $(a).closest("li").addClass("expanding").removeClass("closed"), $(a).slideToggle(t, function() {
-      const e = $(this).closest("li");
+      let e = $(this).closest("li");
       $(a).is(":visible") ? ($(e).addClass("expand"), $(e).removeClass("closed")) : ($(e).addClass("closed"), $(e).removeClass("expand")), $(e).removeClass("expanding closing")
     }))
   }), $(".sidebar .nav > .has-sub .sub-menu li.has-sub > a").click(function() {
     if (0 === $(".page-sidebar-minified").length) {
-      const a = $(this).next(".sub-menu");
+      let a = $(this).next(".sub-menu");
       $(a).is(":visible") ? $(a).closest("li").addClass("closing").removeClass("expand") : $(a).closest("li").addClass("expanding").removeClass("closed"), $(a).slideToggle(t, function() {
-        const e = $(this).closest("li");
+        let e = $(this).closest("li");
         $(a).is(":visible") ? ($(e).addClass("expand"), $(e).removeClass("closed")) : ($(e).addClass("closed"), $(e).removeClass("expand")), $(e).removeClass("expanding closing")
       })
     }
   })
 },
 handleMobileSidebarToggle = function() {
-  const n = !1;
+  let n = !1;
   $(".sidebar").bind("click touchstart", function(e) {
     0 !== $(e.target).closest(".sidebar").length ? n = !0 : (n = !1, e.stopPropagation())
   }), $(document).bind("click touchstart", function(e) {
     0 === $(e.target).closest(".sidebar").length && (n = !1), 0 !== $(e.target).closest("#float-sub-menu").length && (n = !0), e.isPropagationStopped() || !0 === n || ($("#page-container").hasClass("page-sidebar-toggled") && (n = !0, $("#page-container").removeClass("page-sidebar-toggled")), $(window).width() <= 767 && $("#page-container").hasClass("page-right-sidebar-toggled") && (n = !0, $("#page-container").removeClass("page-right-sidebar-toggled")))
   }), $("[data-click=right-sidebar-toggled]").click(function(e) {
     e.stopPropagation();
-    const a = "#page-container",
+    let a = "#page-container",
     t = "page-right-sidebar-collapsed";
     t = $(window).width() < 979 ? "page-right-sidebar-toggled" : t, $(a).hasClass(t) ? $(a).removeClass(t) : !0 !== n ? $(a).addClass(t) : n = !1, $(window).width() < 480 && $("#page-container").removeClass("page-sidebar-toggled"), $(window).trigger("resize")
   }), $("[data-click=sidebar-toggled]").click(function(e) {
     e.stopPropagation();
-    const a = "page-sidebar-toggled",
+    let a = "page-sidebar-toggled",
     t = "#page-container";
     $(t).hasClass(a) ? $(t).removeClass(a) : !0 !== n ? $(t).addClass(a) : n = !1, $(window).width() < 480 && $("#page-container").removeClass("page-right-sidebar-toggled")
   })
@@ -51,7 +49,7 @@ handleMobileSidebarToggle = function() {
 handleSidebarMinify = function() {
   $(document).on("click", "[data-click=sidebar-minify]", function(e) {
     e.preventDefault();
-    const a = "page-sidebar-minified",
+    let a = "page-sidebar-minified",
     t = "#page-container";
     $(t).hasClass(a) ? $(t).removeClass(a) : ($(t).addClass(a), /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && ($('#sidebar [data-scrollbar="true"]').css("margin-top", "0"), $('#sidebar [data-scrollbar="true"]').css("overflow-x", "scroll"))), $(window).trigger("resize")
   })
@@ -60,19 +58,19 @@ handleLocalStorage = function() {
   "use strict";
   try {
     if ("undefined" != typeof Storage && "undefined" != typeof localStorage) {
-      const e = window.location.href;
+      let e = window.location.href;
       e = (e = e.split("?"))[0];
-      const a = localStorage.getItem(e);
+      let a = localStorage.getItem(e);
       if (a) {
         a = JSON.parse(a);
-        const t = 0;
+        let t = 0;
         $.when($('.panel:not([data-sortable="false"])').parent('[class*="col-"]').each(function() {
-          const e = a[t],
+          let e = a[t],
           o = $(this);
           e && $.each(e, function(e, a) {
-            const t = $('[data-sortable-id="' + a.id + '"]').not('[data-init="true"]');
+            let t = $('[data-sortable-id="' + a.id + '"]').not('[data-init="true"]');
             if (0 !== $(t).length) {
-              const n = $(t).clone();
+              let n = $(t).clone();
               $(t).remove(), $(o).append(n), $('[data-sortable-id="' + a.id + '"]').attr("data-init", "true")
             }
           }), t++
@@ -103,14 +101,14 @@ handleMouseoutFloatSubMenu = function(e) {
 },
 handleSidebarMinifyFloatMenu = function() {
   $(document).on("click", "#float-sub-menu li.has-sub > a", function(e) {
-    const a = $(this).next(".sub-menu"),
+    let a = $(this).next(".sub-menu"),
     t = $(a).closest("li"),
     r = !1,
     d = !1;
     $(a).is(":visible") ? ($(t).addClass("closing"), r = !0) : ($(t).addClass("expanding"), d = !0), $(a).slideToggle({
       duration: 250,
       progress: function() {
-        const e = $("#float-sub-menu"),
+        let e = $("#float-sub-menu"),
         a = $(e).height(),
         t = $(e).offset(),
         n = $(e).attr("data-offset-top"),
@@ -127,7 +125,7 @@ handleSidebarMinifyFloatMenu = function() {
           top: "20px",
           bottom: "auto"
         })), d && s - i < a) {
-          const l = s - o - 22;
+          let l = s - o - 22;
           $("#float-sub-menu").css({
             top: "auto",
             bottom: 0
@@ -147,12 +145,12 @@ handleSidebarMinifyFloatMenu = function() {
   }), $(".sidebar .nav > li.has-sub > a").hover(function() {
     if ($("#page-container").hasClass("page-sidebar-minified")) {
       clearTimeout(floatSubMenuTimeout);
-      const e = $(this).closest("li").find(".sub-menu").first();
+      let e = $(this).closest("li").find(".sub-menu").first();
       if (targetFloatMenu == this && 0 !== $("#float-sub-menu").length) return;
       targetFloatMenu = this;
-      const a = $(e).html();
+      let a = $(e).html();
       if (a) {
-        const t = $("#sidebar").offset(),
+        let t = $("#sidebar").offset(),
         n = $("#page-container").hasClass("page-with-right-sidebar") ? $(window).width() - t.left : t.left + 60,
         o = $(e).height(),
         i = $(this).offset().top - $(window).scrollTop(),
@@ -178,7 +176,7 @@ handleSidebarMinifyFloatMenu = function() {
             left: s,
             right: l
           });
-          const d = r - i - 21;
+          let d = r - i - 21;
           $("#float-sub-menu-arrow").css({
             top: "auto",
             bottom: d + "px"
@@ -261,4 +259,5 @@ $(document).ready(function() {
   App.init();
   Highlight.init();
 });
+
 
